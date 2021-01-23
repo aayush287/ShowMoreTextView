@@ -3,6 +3,6 @@
     <declare-styleable name="ShowMoreTextView">
         <attr name="trimExpandedText" format="string" />
         <attr name="trimCollapsedText" format="string" />
-        <attr name="trimMaxLine" format="integer" />
+        <attr name="maxLinesVisible" format="integer" />
     </declare-styleable>
 </resources>
