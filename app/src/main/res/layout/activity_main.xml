@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         android:text="@string/test_string"
         android:layout_gravity="center"
-        app:trimMaxLine="3"/>
+        app:maxLinesVisible="3"/>
 
 </FrameLayout>

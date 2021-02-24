@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ShowMoreTextView">
-        <attr name="trimExpandedText" format="string" />
-        <attr name="trimCollapsedText" format="string" />
+        <attr name="expandedText" format="string" />
+        <attr name="collapsedText" format="string" />
         <attr name="maxLinesVisible" format="integer" />
     </declare-styleable>
 </resources>
