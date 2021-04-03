@@ -44,6 +44,8 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
 
     private fun setText() {
         super.setText(getDisplayableText())
+        invalidate()
+        requestLayout()
     }
 
     private fun getDisplayableText(): CharSequence? {
@@ -57,13 +59,26 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
     private fun getCollapsedText(text: CharSequence?): CharSequence? {
         Log.d(TAG, "getCollapsedText: $ELLIPSIZE")
         Log.d(TAG, "getCollapsedText: $collapsedText")
-        val trimEndIndex: Int = lastIndexOfText - (ELLIPSIZE.length + (collapsedText?.length ?: 0) + 1)
+        Log.d(TAG, "getCollapsedText: lastIndex -> $lastIndexOfText")
+        Log.d(TAG, "getCollapsedText: text -> $text")
+        if (text != null) {
+            Log.d(TAG, "getCollapsedText: text size -> ${text.length}")
+        }
+        val trimEndIndex: Int = if (lastIndexOfText == DEFAULT_INDEX) {
+            text?.length ?: 0
+        } else {
+            lastIndexOfText - (ELLIPSIZE.length +
+                    (collapsedText?.length ?: 0) + 1)
+        }
+
+
+        Log.d(TAG, "getCollapsedText: trimIndex -> $trimEndIndex")
 
         val stringBuilder = SpannableStringBuilder(text, 0, trimEndIndex)
             .append(ELLIPSIZE)
             .append(collapsedText ?: "")
 
-        val fcs = ForegroundColorSpan(Color.parseColor("#DE000000"))
+        val fcs = ForegroundColorSpan(Color.parseColor("#4287f5"))
 
         stringBuilder.setSpan(
             fcs,
@@ -72,14 +87,15 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
+        Log.d(TAG, "getCollapsedText: string builder -> $stringBuilder")
+
         return stringBuilder
     }
 
-    override fun setText(text: CharSequence?, type: BufferType?) {
-        this.textString = text
-        bufferType = type
-        setText()
-    }
+//    override fun setText(text: CharSequence?, type: BufferType?) {
+//        this.textString = text
+//        bufferType = type
+//    }
 
     private fun initializingViewTreeObserver() {
         viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
@@ -93,6 +109,7 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
     }
 
     private fun calculateLastIndex() {
+        Log.d(TAG, "calculateLastIndex: lineCount -> $lineCount and maxLines -> $maxLinesVisible")
         try {
             lastIndexOfText = if (maxLinesVisible == 0) {
                 layout.getLineEnd(0)
@@ -107,7 +124,8 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
     }
 
     init {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShowMoreTextView)
+        val typedArray =
+            context.theme.obtainStyledAttributes(attrs, R.styleable.ShowMoreTextView, 0, 0)
         collapsedText = resources.getString(
             typedArray.getResourceId(
                 R.styleable.ShowMoreTextView_collapsedText,
