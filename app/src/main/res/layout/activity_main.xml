@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:text="@string/test_string"
         android:layout_gravity="center"
-        app:maxLinesVisible="7"
-        app:collapsedText="Show"/>
+        app:maxLinesVisible="2"
+        app:collapsedText="Show"
+        app:showMoreSpanColor="@color/purple_500"
+        app:showLessSpanColor="@color/teal_700"/>
 
 </FrameLayout>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -12,6 +13,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.core.content.ContextCompat
 
 
 class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
@@ -23,20 +25,19 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
     }
 
     private var textString: CharSequence? = null
-    private var endCharacterIndex = 0
     private var maxLinesVisible = DEFAULT_MAX_LINE
     private var collapsedText: CharSequence? = null
     private var expandedText: CharSequence? = null
-    private var lastIndexOfText = 0
+    private var endCharacterIndex = 0
     private val colorClickableText = 0
     private var showFullExpandedText = false
+    private var readMore = true
+    private val ELLIPSIZE = "..."
+    private var showMoreSpanColor : Int = 0
+    private var showLessSpanColor : Int = 0
+
     private val viewMoreSpan by lazy { ShowMoreClickableSpan() }
 
-    private var readMore = true
-
-    private var bufferType: BufferType? = null
-
-    private val ELLIPSIZE = "..."
 
     companion object {
         const val DEFAULT_INDEX = -1
@@ -54,6 +55,10 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
         return getTrimmedText(textString)
     }
 
+    /**
+     *  get Collapsed text if readMore is true
+     *  get Expanded text if readMore is false
+     */
     private fun getTrimmedText(text: CharSequence?): CharSequence? {
         return if (readMore) {
             getCollapsedText(text)
@@ -63,29 +68,36 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
     }
 
 
+    /**
+     * return a char sequence of text string upto maxLinesVisible
+     *
+     * if lastIndexOfText = -1 then return whole text without appending Show More
+     */
     private fun getCollapsedText(text: CharSequence?): CharSequence {
 
-        val trimEndIndex: Int = if (lastIndexOfText == DEFAULT_INDEX) {
-            text?.length ?: 0
-        } else {
-            lastIndexOfText - (ELLIPSIZE.length +
-                    (collapsedText?.length ?: 0) + 1)
+        if (endCharacterIndex == DEFAULT_INDEX) {
+            return text ?: ""
+        }else {
+            val trimEndIndex: Int = endCharacterIndex - (ELLIPSIZE.length + (collapsedText?.length ?: 0) + 1)
+
+
+            val stringBuilder = SpannableStringBuilder(text, 0, trimEndIndex)
+                .append(ELLIPSIZE)
+                .append(collapsedText ?: "")
+
+//            val fcs = ForegroundColorSpan(showMoreSpanColor)
+//            Log.d(TAG, "getCollapsedText: color -> $fcs")
+//
+//            stringBuilder.setSpan(
+//                fcs,
+//                stringBuilder.length - (collapsedText?.length ?: 0),
+//                stringBuilder.length,
+//                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+
+            return addClickableSpan(stringBuilder, collapsedText ?: "")
         }
 
-        val stringBuilder = SpannableStringBuilder(text, 0, trimEndIndex)
-            .append(ELLIPSIZE)
-            .append(collapsedText ?: "")
-
-        val fcs = ForegroundColorSpan(Color.parseColor("#4287f5"))
-
-        stringBuilder.setSpan(
-            fcs,
-            stringBuilder.length - (collapsedText?.length ?: 0),
-            stringBuilder.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        return addClickableSpan(stringBuilder, collapsedText ?: "")
     }
 
     private fun getExpandedText(text: CharSequence?): CharSequence? {
@@ -94,14 +106,14 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
                 .append(ELLIPSIZE)
                 .append(expandedText ?: "")
 
-            val fcs = ForegroundColorSpan(Color.parseColor("#4287f5"))
-
-            stringBuilder.setSpan(
-                fcs,
-                stringBuilder.length - (expandedText?.length ?: 0),
-                stringBuilder.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+//            val fcs = ForegroundColorSpan(showLessSpanColor)
+//
+//            stringBuilder.setSpan(
+//                fcs,
+//                stringBuilder.length - (expandedText?.length ?: 0),
+//                stringBuilder.length,
+//                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
             return addClickableSpan(stringBuilder, expandedText ?: "")
         }
 
@@ -123,6 +135,14 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
             readMore = !readMore
             setText()
         }
+
+        override fun updateDrawState(ds: TextPaint) {
+            if (readMore){
+                ds.color = showMoreSpanColor
+            }else{
+                ds.color = showLessSpanColor
+            }
+        }
     }
 
     private fun initializingViewTreeObserver() {
@@ -138,7 +158,7 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
 
     private fun calculateLastIndex() {
         try {
-            lastIndexOfText = when (maxLinesVisible) {
+            endCharacterIndex = when (maxLinesVisible) {
                 0 -> {
                     layout.getLineEnd(0)
                 }
@@ -188,6 +208,17 @@ class ShowMoreTextView(context: Context, attrs: AttributeSet?) :
             R.styleable.ShowMoreTextView_maxLinesVisible,
             DEFAULT_MAX_LINE
         )
+
+        showMoreSpanColor = typedArray.getColor(
+            R.styleable.ShowMoreTextView_showMoreSpanColor,
+            ContextCompat.getColor(context, R.color.default_show_more)
+        )
+
+        showLessSpanColor = typedArray.getColor(
+            R.styleable.ShowMoreTextView_showLessSpanColor,
+            ContextCompat.getColor(context, R.color.default_show_less)
+        )
+
 
         textString = text
         

@@ -4,5 +4,7 @@
         <attr name="expandedText" format="string" />
         <attr name="collapsedText" format="string" />
         <attr name="maxLinesVisible" format="integer" />
+        <attr name="showMoreSpanColor" format="reference|color"/>
+        <attr name="showLessSpanColor" format="reference|color"/>
     </declare-styleable>
 </resources>
