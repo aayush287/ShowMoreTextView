@@ -1,6 +1,28 @@
 # ShowMoreTextView
 A Custom TextView with trim text
 
+## Download
+To add the ShowMoreTextView library to your Android Studio project, simply add the following gradle dependency:
+
+Step 1. Add it in your root build.gradle at the end of repositories:
+```java
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+Step 2. Add the dependency
+```java
+dependencies {
+	        implementation 'com.github.aayush287:ShowMoreTextView:1.0.1'
+	}
+```
+
+
+
 ## Usage
 
 To use ShowMoreTextView in your layout XML, you can use the following code in your layout:
