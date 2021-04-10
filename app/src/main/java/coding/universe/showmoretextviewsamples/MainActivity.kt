@@ -1,4 +1,4 @@
-package coding.universe.showmoretextview
+package coding.universe.showmoretextviewsamples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
