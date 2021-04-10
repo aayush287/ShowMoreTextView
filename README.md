@@ -23,7 +23,7 @@ To customize ShowMoreTextView you can use following attributes:
 
 ## Screenshots
 
-![screenshot](screenshots/collapsed.png)
+![screenshot](screenshots/collapsed.jpg)
 ![screenshot](screenshots/expanded.png)
 
 License
