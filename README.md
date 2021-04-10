@@ -6,10 +6,11 @@ A Custom TextView with trim text
 To use ShowMoreTextView in your layout XML, you can use the following code in your layout:
 
 ```xml
-<com.borjabravo.readmoretextview.ReadMoreTextView
-    android:id="@+id/text_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+<coding.universe.showmoretextview.ShowMoreTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test_string"
+        app:maxLinesVisible="15" />
 ```
 
 To customize ShowMoreTextView you can use following attributes:
