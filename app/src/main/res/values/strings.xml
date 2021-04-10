@@ -1,11 +1,5 @@
 <resources>
     <string name="app_name">ShowMoreTextView</string>
     <string name="test_string">
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License</string>
-
-    <string name="test_string_3">the \n answer is \n no \n lets do this \n</string>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id nisl dolor. Pellentesque in tempor eros. Donec pellentesque mauris quis diam tincidunt, sed lobortis tellus tempor. Nunc ut blandit risus, vitae interdum sem. Donec sit amet facilisis libero. Fusce facilisis, neque et eleifend aliquet, nulla magna pulvinar mi, eget interdum lectus est id mauris. Sed ut dignissim neque. Aliquam facilisis ipsum a malesuada dictum. Integer et varius urna. Nulla enim augue, aliquet tempus ipsum nec, ornare volutpat orci. Aliquam erat volutpat. Quisque porttitor ultrices nunc sit amet consectetur. </string>
 </resources>

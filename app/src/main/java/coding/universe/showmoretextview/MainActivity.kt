@@ -8,10 +8,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<ShowMoreTextView>(R.id.textView).apply {
-            setCollapsedText("Show")
-            setExpandedText("Less")
-            setMaxLinesVisible(2)
-        }
     }
 }
