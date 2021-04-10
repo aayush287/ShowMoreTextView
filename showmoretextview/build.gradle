@@ -1,6 +1,18 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
+}
+
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'coding.universe'
+            artifactId = 'showmoretextview'
+            version = '1.0.1'
+        }
+    }
 }
 
 android {
