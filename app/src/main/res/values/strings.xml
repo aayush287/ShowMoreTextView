@@ -6,4 +6,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License</string>
+
+    <string name="test_string_3">the \n answer is \n no \n lets do this \n</string>
 </resources>

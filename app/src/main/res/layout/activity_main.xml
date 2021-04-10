@@ -8,13 +8,11 @@
     tools:context=".MainActivity">
 
     <coding.universe.showmoretextview.ShowMoreTextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test_string"
         android:layout_gravity="center"
-        app:maxLinesVisible="2"
-        app:collapsedText="Show"
-        app:showMoreSpanColor="@color/purple_500"
-        app:showLessSpanColor="@color/teal_700"/>
+        app:maxLengthVisible="12" />
 
 </FrameLayout>
