@@ -10,7 +10,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'coding.universe'
             artifactId = 'showmoretextview'
-            version = '1.0.1'
+            version = '1.0.2'
         }
     }
 }
@@ -23,7 +23,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
 
         multiDexEnabled true
 
